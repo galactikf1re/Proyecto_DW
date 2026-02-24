@@ -1,8 +1,9 @@
-body { margin:10px; background-image: url("images/wall.jpg"); }
+body { margin:10px; background-color: #1a1a1a; }
 
 .container {
   width:800px;
   margin:0 auto;
+  text-align: center;
 }
 
 .barra {
@@ -10,20 +11,37 @@ body { margin:10px; background-image: url("images/wall.jpg"); }
   color: #ffffff;
   font-size: 20px;
   height: 20px; width: 700px;
+  margin: 10px auto;
 }
+
 #my_canvas{ 
   background:#000000; 
   border:#000 1px solid; 
+  display: block;
+  margin: 0 auto;
 }
+
+.controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .boton{
-    color:red;
-    font-size: 40px;
+    color:white;
+    font-size: 16px;
     background-color: #000000;
     cursor: pointer;
     border-radius: 8px;
     border:2px solid blue;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
 }
+
 .boton:hover{
     background-color: white;
     color: #000000;
+    transform: scale(1.05);
 }

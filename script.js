@@ -6,7 +6,7 @@ function initCanvas(){
     var enemiespic2 = new Image(); // enemigo 2
 
     // backgroundImage y naveImage
-    backgroundImage.src = "C:\\Users\\Rogelio Centeno\\OneDrive\\Imágenes\\Nueva carpeta\\Nueva carpeta\\planet-8215532_1280.png"; //Background picture
+    backgroundImage.src = "images/background.png"; //Background picture
     naveImage.src       = "images/spaceship-pic.png"; //Spaceship picture
     // Enemigos fotos
     enemiespic1.src     = "images/enemigo1.png";
@@ -110,7 +110,7 @@ function initCanvas(){
                 clearInterval(animateInterval); // Stop the game animation loop
                 ctx.fillStyle = 'yellow';
                 ctx.font = this.gameStatus.font;
-                ctx.fillText('You win!', cW * .5 - 80, 50);
+                ctx.fillText('Nah, id win!', cW * .5 - 80, 50);
             }
         }
         // Detectar impacto de bullet (bala)
@@ -133,7 +133,7 @@ function initCanvas(){
             // If location of ship is greater than 550 then we know it passed lower level
             if(enemy.y > 550){
                 this.gameStatus.over = true;
-                this.gameStatus.message = 'Enemy(s) have passed!';
+                this.gameStatus.message = 'Nigga the enemy(s) have passed!';
             }
             // Esto detecta un choque de la nave con enemigos
             //console.log(this);
@@ -147,7 +147,7 @@ function initCanvas(){
             if ((enemy.y < this.y + 25 && enemy.y > this.y - 25) &&
                 (enemy.x < this.x + 45 && enemy.x > this.x - 45)) { // Checking if enemy is on the left or right of spaceship
                     this.gameStatus.over = true;
-                    this.gameStatus.message = 'You Died!'
+                    this.gameStatus.message = 'Youre a Nigga!'
                 }
 
             if(this.gameStatus.over === true){  
@@ -173,7 +173,7 @@ function initCanvas(){
     var fire_btn  = document.getElementById('fire_btn'); 
 
    document.addEventListener('keydown', function(event) {
-        if(event.keyCode == 37) // left arrow
+        if(event.keyCode == 37)
         {
          launcher.direccion = 'left';  
             if(launcher.x < cW*.2-130){
@@ -192,7 +192,7 @@ function initCanvas(){
     }); 
 
     document.addEventListener('keydown', function(event) {
-        if(event.keyCode == 39) // right arrow
+        if(event.keyCode == 39)
         {
          launcher.direccion = 'right';
          if(launcher.x > cW-110){
@@ -204,7 +204,7 @@ function initCanvas(){
     });
 
     document.addEventListener('keyup', function(event) {
-        if(event.keyCode == 39) // right arrow
+        if(event.keyCode == 39)
         {
          launcher.x-=0;   
          launcher.direccion = '';
@@ -212,7 +212,7 @@ function initCanvas(){
     }); 
 
     document.addEventListener('keydown', function(event){
-         if(event.keyCode == 38) // up arrow
+         if(event.keyCode == 38)
          {
            launcher.direccion = 'upArrow';  
            if(launcher.y < cH*.2-80){
