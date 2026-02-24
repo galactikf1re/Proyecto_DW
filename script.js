@@ -3,13 +3,14 @@ function initCanvas(){
     var backgroundImage = new Image();
     var naveImage   = new Image(); // nave
     var enemiespic1  = new Image(); // enemigo 1
-
+    var enemiespic2 = new Image(); // enemigo 2
 
     // backgroundImage y naveImage
-    backgroundImage.src = "C:\\Users\\Rogelio Centeno\\OneDrive\\Imágenes\\Nueva carpeta\\Nueva carpeta\\planet-8215532_1280.png"; //Background picture
+    backgroundImage.src = "images/background-pic.jpg"; //Background picture
     naveImage.src       = "images/spaceship-pic.png"; //Spaceship picture
     // Enemigos fotos
     enemiespic1.src     = "images/enemigo1.png";
+    enemiespic2.src     = "images/enemigo2.png"; //Enemies picture
     
     // width and height (canvas)
     var cW = ctx.canvas.width; // 700px 
