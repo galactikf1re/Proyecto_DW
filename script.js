@@ -6,7 +6,7 @@ function initCanvas(){
     var enemiespic2 = new Image(); // enemigo 2
 
     // backgroundImage y naveImage
-    backgroundImage.src = "images/background-pic.jpg"; //Background picture
+    backgroundImage.src = "C:\\Users\\Rogelio Centeno\\OneDrive\\Imágenes\\Nueva carpeta\\Nueva carpeta\\planet-8215532_1280.png"; //Background picture
     naveImage.src       = "images/spaceship-pic.png"; //Spaceship picture
     // Enemigos fotos
     enemiespic1.src     = "images/enemigo1.png";
