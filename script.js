@@ -6,17 +6,17 @@ function initCanvas(){
     var enemiespic2 = new Image(); // enemigo 2
 
     // backgroundImage y naveImage
-    backgroundImage.src = "images/background.png"; //Background picture
-    naveImage.src       = "images/spaceship-pic.png"; //Spaceship picture
+    backgroundImage.src = "images/background.png";
+    naveImage.src       = "images/spaceship-pic.png"; 
     // Enemigos fotos
     enemiespic1.src     = "images/enemigo1.png";
-    enemiespic2.src     = "images/enemigo2.png"; //Enemies picture
+    enemiespic2.src     = "images/enemigo2.png"; 
     
-    // width and height (canvas)
+    // Dimensiones de la pantalla
     var cW = ctx.canvas.width; // 700px 
     var cH = ctx.canvas.height;// 600px
 
-    // template for naves
+    // Nave de jugador
     var enemyTemplate = function(options){
         return {
             id: options.id || '',
@@ -24,11 +24,11 @@ function initCanvas(){
             y: options.y || '',
             w: options.w || '',
             h: options.h || '',
-            image: options.image || enemiespic1
+            image: options.image || enemiespic1,
+            health: options.health || 1
         }
     }
 
-    // To reduce a repetitive function or two I've made some slight changes to how you create enemies.
     var enemies = [
                    new enemyTemplate({id: "enemy1", x: 100, y: -20, w: 50, h: 30 }),
                    new enemyTemplate({id: "enemy2", x: 225, y: -20, w: 50, h: 30 }),
@@ -41,41 +41,39 @@ function initCanvas(){
                    new enemyTemplate({id: "enemy9", x:475,  y:-20,  w:50,  h: 30}),
                    new enemyTemplate({id: "enemy10",x: 600, y: -20, w: 50, h: 30}),
 
-                   // Segundo grupo de enemigos
-                   new enemyTemplate({ id: "enemy11", x: 100, y: -220, w: 50, h: 30, image: enemiespic2 }),
-                   new enemyTemplate({ id: "enemy12", x: 225, y: -220, w: 50, h: 30, image: enemiespic2 }),
-                   new enemyTemplate({ id: "enemy13", x: 350, y: -220, w: 80, h: 50, image: enemiespic2 }),
-                   new enemyTemplate({ id: "enemy14", x: 100, y: -270, w: 80, h: 50, image: enemiespic2 }),
-                   new enemyTemplate({ id: "enemy15", x: 225, y: -270, w: 50, h: 30, image: enemiespic2 }),
-                   new enemyTemplate({ id: "enemy16", x: 350, y: -270, w: 50, h: 30, image: enemiespic2 }),
-                   new enemyTemplate({ id: "enemy17", x: 475, y: -270, w: 50, h: 30, image: enemiespic2 }),
-                   new enemyTemplate({ id: "enemy18", x: 600, y: -270, w: 80, h: 50, image: enemiespic2 }),
-                   new enemyTemplate({ id: "enemy19", x: 475, y: -200, w: 50, h: 30, image: enemiespic2 }),
-                   new enemyTemplate({ id: "enemy20", x: 600, y: -200, w: 50, h: 30, image: enemiespic2 })
+                   // Segundo tipo de enemigos
+                   new enemyTemplate({ id: "enemy11", x: 100, y: -220, w: 50, h: 30, image: enemiespic2, health: 2 }),
+                   new enemyTemplate({ id: "enemy12", x: 225, y: -220, w: 50, h: 30, image: enemiespic2, health: 2 }),
+                   new enemyTemplate({ id: "enemy13", x: 350, y: -220, w: 80, h: 50, image: enemiespic2, health: 2 }),
+                   new enemyTemplate({ id: "enemy14", x: 100, y: -270, w: 80, h: 50, image: enemiespic2, health: 2 }),
+                   new enemyTemplate({ id: "enemy15", x: 225, y: -270, w: 50, h: 30, image: enemiespic2, health: 2 }),
+                   new enemyTemplate({ id: "enemy16", x: 350, y: -270, w: 50, h: 30, image: enemiespic2, health: 2 }),
+                   new enemyTemplate({ id: "enemy17", x: 475, y: -270, w: 50, h: 30, image: enemiespic2, health: 2 }),
+                   new enemyTemplate({ id: "enemy18", x: 600, y: -270, w: 80, h: 50, image: enemiespic2, health: 2 }),
+                   new enemyTemplate({ id: "enemy19", x: 475, y: -200, w: 50, h: 30, image: enemiespic2, health: 2 }),
+                   new enemyTemplate({ id: "enemy20", x: 600, y: -200, w: 50, h: 30, image: enemiespic2, health: 2 })
                   ];
 
-    // This allows for more enemies to be rendered without needing a function per set of enemies.
-    // This also forces enemies to check if THEY are hitting the player 
+    // Se asegura que los enemigos sepan si estan en contacto con el jugador y reduce problemas de render
     var renderEnemies = function (enemyList) {
         for (var i = 0; i < enemyList.length; i++) {
             console.log(enemyList[i]);
             ctx.drawImage(enemyList[i].image, enemyList[i].x, enemyList[i].y += .5, enemyList[i].w, enemyList[i].h);
-            // Detects when ships hit lower level
+            // Detecta la posicion de la nave
             launcher.hitDetectLowerLevel(enemyList[i]);
         }
     }
 
     function Launcher(){
-        // bullet location (ubicación de balas)
+        // Ubicacion de las balas
         this.y = 500, 
         this.x = cW*.5-25, 
         this.w = 100, 
         this.h = 100,   
         this.direccion, 
-        this.bg="white", // bullet color (color de bala)
+        this.bg="white", // Color del proyectil
         this.misiles = [];
 
-         // If you wanted to use different fonts or messages for the player losing you can change it accordingly.
          this.gameStatus = {
             over: false, 
             message: "",
@@ -94,26 +92,26 @@ function initCanvas(){
                 this.y-=5;
             }
             ctx.fillStyle = this.bg;
-            ctx.drawImage(backgroundImage, 10, 10); // background image
-            ctx.drawImage(naveImage,this.x,this.y, 100, 90); // we need to make sure spaceship is at the same location as the bullets
+            ctx.drawImage(backgroundImage, 10, 10); // Fondo
+            ctx.drawImage(naveImage,this.x,this.y, 100, 90); // Alinear las balas con la nave
 
             for(var i=0; i < this.misiles.length; i++){
                 var m = this.misiles[i];
-                ctx.fillRect(m.x, m.y-=5, m.w, m.h); // bullet direction
+                ctx.fillRect(m.x, m.y-=5, m.w, m.h); // Direccion del proyectil
                 this.hitDetect(this.misiles[i],i);
-                if(m.y <= 0){ // If a missile goes past the canvas boundaries, remove it
-                    this.misiles.splice(i,1); // splice that missile out of the misiles array
+                if(m.y <= 0){ // Si la bala se sale del mapa se borra
+                    this.misiles.splice(i,1); // Sacar la bala del array
                 }
             }
-            // This happens if you win
+            // Si ganas. . .
             if (enemies.length === 0) {
-                clearInterval(animateInterval); // Stop the game animation loop
+                clearInterval(animateInterval); // Detener el jeugo
                 ctx.fillStyle = 'yellow';
                 ctx.font = this.gameStatus.font;
                 ctx.fillText('Nah, id win!', cW * .5 - 80, 50);
             }
         }
-        // Detectar impacto de bullet (bala)
+        // Detectar impacto de bala
         this.hitDetect = function (m, mi) {
             console.log('crush');
             for (var i = 0; i < enemies.length; i++) {
@@ -122,44 +120,46 @@ function initCanvas(){
                    m.x <= e.x+e.w && 
                    m.y >= e.y && 
                    m.y <= e.y+e.h){
-                    this.misiles.splice(this.misiles[mi],1); // Remove the missile
-                    enemies.splice(i, 1); // Remove the enemy that the missile hit
+                    this.misiles.splice(this.misiles[mi],1); // Remover el proyectil
+                    e.health -= 1; // Reducir vida
+                    if(e.health <= 0) {
+                        enemies.splice(i, 1); // Solo matar al enemigo si su salud es 0
+                    }
                     document.querySelector('.barra').innerHTML = "Destroyed "+ e.id+ " ";
                 }
             }
         }
-        // Ask player ship if an enemy has passed or has hit the player ship
+
         this.hitDetectLowerLevel = function(enemy){
-            // If location of ship is greater than 550 then we know it passed lower level
+            // Para detectar que los enemigos ya pasaron al limite de abajo de la pantalla
             if(enemy.y > 550){
                 this.gameStatus.over = true;
                 this.gameStatus.message = 'Nigga the enemy(s) have passed!';
             }
             // Esto detecta un choque de la nave con enemigos
             //console.log(this);
-            // this.y -> where is spaceship location
+            // this.y -> ubicacion de la nave
             if(enemy.id === 'enemy3'){
-                //console.log(this.y);
                 console.log(this.x);
             }
-            // a) If enemy y is greater than this.y - 25 => then we know there's a collision
-            // b) If enemy x is gless than this.x + 45 && enemy x > this.x - 45 then we know theres a collision
+            
             if ((enemy.y < this.y + 25 && enemy.y > this.y - 25) &&
-                (enemy.x < this.x + 45 && enemy.x > this.x - 45)) { // Checking if enemy is on the left or right of spaceship
+                (enemy.x < this.x + 45 && enemy.x > this.x - 45)) { 
                     this.gameStatus.over = true;
                     this.gameStatus.message = 'Youre a Nigga!'
                 }
 
             if(this.gameStatus.over === true){  
-                clearInterval(animateInterval); // Stop the game animation loop
-                ctx.fillStyle = this.gameStatus.fillStyle; // set color to text
+                clearInterval(animateInterval); // Parar la animacion
+                ctx.fillStyle = this.gameStatus.fillStyle; // Establecer el color a texto
                 ctx.font = this.gameStatus.font;
-                // To show text on canvas
-                ctx.fillText(this.gameStatus.message, cW * .5 - 80, 50); // text x , y
+                // Mostrar texto en pantalla
+                ctx.fillText(this.gameStatus.message, cW * .5 - 80, 50);
             }
         }
     }
     
+    //Hacer que aparezcan los enemigos
     var launcher = new Launcher();
     function animate(){
         ctx.clearRect(0, 0, cW, cH);
@@ -168,9 +168,12 @@ function initCanvas(){
     }
     var animateInterval = setInterval(animate, 6);
     
+    //Obtener los botones
     var left_btn  = document.getElementById('left_btn');
     var right_btn = document.getElementById('right_btn');
     var fire_btn  = document.getElementById('fire_btn'); 
+
+    //Eventos para que te permita moverte hacia todas las direcciones
 
    document.addEventListener('keydown', function(event) {
         if(event.keyCode == 37)
@@ -231,7 +234,7 @@ function initCanvas(){
     });
 
     document.addEventListener('keydown', function(event){
-         if(event.keyCode == 40) // down arrow
+         if(event.keyCode == 40) 
          {
            launcher.direccion = 'downArrow';  
           if(launcher.y > cH - 110){
@@ -241,7 +244,7 @@ function initCanvas(){
          }
     });
     document.addEventListener('keyup', function(event){
-         if(event.keyCode == 40) // down arrow
+         if(event.keyCode == 40) 
          {
            launcher.y += 0;
            launcher.direccion = '';
@@ -249,13 +252,13 @@ function initCanvas(){
     });
 
     document.addEventListener('keydown', function(event){
-         if(event.keyCode == 80) // restart game
+         if(event.keyCode == 80) // Esto es para resetear el juego :v
          {
           location.reload();
          }
     });
 
-    // control buttons
+    // Botones de direcciones
     left_btn.addEventListener('mousedown', function(event) {
         launcher.direccion = 'left';
     });
@@ -271,11 +274,11 @@ function initCanvas(){
     right_btn.addEventListener('mouseup', function(event) {
         launcher.direccion = '';
     });
-    //This code below fires bullets (balas)
+    //Disparar asi bien maniacote
     fire_btn.addEventListener('mousedown', function(event) {
         launcher.misiles.push({x: launcher.x + launcher.w*.5, y: launcher.y, w: 3, h: 10});
     });
-    // This fires when clicking on space button from keyboard
+    // Detectar el espacio del teclado
     document.addEventListener('keydown', function(event) {
         if(event.keyCode == 32) {
            launcher.misiles.push({x: launcher.x + launcher.w*.5, y: launcher.y, w: 3,h: 10});
