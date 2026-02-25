@@ -108,7 +108,9 @@ function initCanvas(){
                 clearInterval(animateInterval); // Detener el jeugo
                 ctx.fillStyle = 'yellow';
                 ctx.font = this.gameStatus.font;
-                ctx.fillText('Nah, id win!', cW * .5 - 80, 50);
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('Nah, id win!', cW * .5, cH * .5);
             }
         }
         // Detectar impacto de bala
@@ -154,7 +156,9 @@ function initCanvas(){
                 ctx.fillStyle = this.gameStatus.fillStyle; // Establecer el color a texto
                 ctx.font = this.gameStatus.font;
                 // Mostrar texto en pantalla
-                ctx.fillText(this.gameStatus.message, cW * .5 - 80, 50);
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.gameStatus.message, cW * .5, cH * .5);
             }
         }
     }
